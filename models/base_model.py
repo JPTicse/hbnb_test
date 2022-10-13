@@ -6,11 +6,12 @@ import uuid
 from datetime import datetime
 formato = "%Y-%m-%dT%H:%M:%S.%f"
 
+
 class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize data"""
         if len(kwargs) > 0:
-            for key,value in kwargs.items():
+            for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
                     value = datetime.strptime(value, formato)
                 if key != "__class__":
@@ -22,7 +23,8 @@ class BaseModel:
 
     def __str__(self):
         """Function that returns str representation"""
-        return '[{}] ({}) {}'.format(self.__class__.__name__, self.id, self.__dict__)
+        return '[{}] ({}) {}'.format(self.__class__.__name__, self.id,
+                                     self.__dict__)
 
     def save(self):
         """Method to update updated_at with current datetime"""
