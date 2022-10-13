@@ -18,6 +18,7 @@ class BaseModel:
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
+            self.save()
 
     def __str__(self):
         """Function that returns str representation"""
