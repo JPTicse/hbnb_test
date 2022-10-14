@@ -5,7 +5,7 @@
 import cmd
 import sys
 
-from  base_model
+from  models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -28,21 +28,27 @@ class HBNBCommand(cmd.Cmd):
         """ Empty line"""
         pass
 
-    #shorcut
-    quit = do_quit
-    EOF = do_EOF
-
     def do_create(self, name_class):
         """Create a new instance of Basemodel, save it (to JSON file) 
            and prints the id."""
         if not name_class:
             print("**class name missing**")
-        elif name_class is not BaseModel:
+        elif name_class != 'BaseModel':
             print("** class doesn't exist **")
         else:
             new_instance = BaseModel()
             new_instance.save()
             print(new_instance.id)
+    
+    def do_show(self, name_class, id):
+        """Prints the string representation of an instance based on the
+        class name and id. (Ex: $ show BaseModel 1234-1234-1234)"""
+        if not name_class:
+            print("**class name missing**")
+        elif name_class != 'BaseModel':
+            print("** class doesn't exist **")
+
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
