@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ Module main base_model.py"""
 
-from curses import keyname
 import uuid
 from datetime import datetime
+import models
+
 formato = "%Y-%m-%dT%H:%M:%S.%f"
 
 
@@ -20,6 +21,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.save()
+            models.storage.new(self)
 
     def __str__(self):
         """Function that returns str representation"""
@@ -29,6 +31,7 @@ class BaseModel:
     def save(self):
         """Method to update updated_at with current datetime"""
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """returns dictionary with all values"""

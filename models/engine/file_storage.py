@@ -3,7 +3,7 @@
     and deserializes JSON file to instances"""
 
 import json
-from models.base_model import base_model
+from models.base_model import BaseModel
 import os
 
 
@@ -18,7 +18,8 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """ Function that add elements in the dictionary """
+        """ Function that add elements in the dictionary 
+            sets in __objects the obj with key <obj class name>.id"""
         if obj:
             self.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
@@ -39,4 +40,6 @@ class FileStorage:
             with open(self.__file_path, 'r') as file:
                 new_object_dict = json.load(file)
             for keys, values in new_object_dict.items():
+                #self.__objects[keys] = values
                 self.__objects[keys] = eval(values['__class__'])(**values)
+           
