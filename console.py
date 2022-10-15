@@ -43,13 +43,13 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
             
-    def do_show(self, arg):
+    def do_show(self, args):
         """Prints the string representation of an instance based
         on the class name and id.
         """
-        list_arg = arg.split(" ")
+        list_arg = args.split(" ")
 
-        if len(arg) == 0:
+        if len(args) == 0:
             print("** class name missing ** ")
             return
 
@@ -122,8 +122,33 @@ class HBNBCommand(cmd.Cmd):
                 list_str.append(obj_str)
                 print(list_str)
 
-    def do_update(self, class_name, id, attr_name, attr_value):
-        
+    def do_update(self, args):   
+        list_arg = args.split(" ")
+
+        if not args:
+            print("**class name missing**")
+            return
+
+        elif list_arg[0] != 'BaseModel':
+            print("** class doesn't exist **")
+            return
+
+        elif len(list_arg) < 2:
+            print("** instance id missing **")
+            return
+
+        else:
+            dict_all_obj = storage.all()
+            string = f'{list_arg[0]}.{list_arg[1]}'
+
+            if string not in dict_all_obj.keys():
+                print("** no instance found **")
+
+            elif len(list_arg) < 3:
+                print("** attribute name missing **")
+
+            elif len(list_arg) < 4:
+                print("** value missing **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
