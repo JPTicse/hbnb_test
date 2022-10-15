@@ -34,8 +34,10 @@ class HBNBCommand(cmd.Cmd):
            and prints the id."""
         if not name_class:
             print("**class name missing**")
+            return
         elif name_class != 'BaseModel':
             print("** class doesn't exist **")
+            return
         else:
             new_instance = BaseModel()
             new_instance.save()
@@ -69,14 +71,14 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print(dict_all_obj[string])
 
-    def do_destroy(self, classDelId):
+    def do_destroy(self, class_Id):
         """Deletes an instance based on the class name and id 
         (save the change into the JSON file). 
         Ex: $ destroy BaseModel 1234-1234-1234"""
 
-        list_arg = classDelId.split(" ")
+        list_arg = class_Id.split(" ")
 
-        if not classDelId:
+        if not class_Id:
             print("**class name missing**")
             return
 
@@ -106,6 +108,22 @@ class HBNBCommand(cmd.Cmd):
         * If the class name doesn’t exist, print ** class doesn't exist **
         (ex: $ all MyModel)"""
 
-        print(self)
+        list_str = []
+        obj_str = ""
+
+        if not newclass:
+            print("class doesn't exist")
+            return
+        else:
+            #return print('[{}]'.format(str(dict_all_obj)))
+            dict_all_obj = storage.all()
+            for key, value in dict_all_obj.items():
+                obj_str = str(value)
+                list_str.append(obj_str)
+                print(list_str)
+
+    def do_update(self, class_name, id, attr_name, attr_value):
+        
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
