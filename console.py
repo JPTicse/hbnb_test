@@ -5,9 +5,18 @@
 import cmd
 import sys
 
-from  models.base_model import BaseModel
 from models import storage
-list_class = {"BaseModel": BaseModel}
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.user import User
+from models.city import City
+from models.place import Place
+from models.state import State
+from models.review import Review
+from models.amenity import Amenity
+
+
+list_class = {"BaseModel": BaseModel, "User": User, "City": City, "Place": Place, "State": State, "Review": Review, "Amenity": Amenity}
 
 class HBNBCommand(cmd.Cmd):
     """ Class that contains the entry point of the command interpreter"""
@@ -35,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         if not name_class:
             print("**class name missing**")
             return
-        elif name_class != 'BaseModel':
+        elif not name_class in list_class:
             print("** class doesn't exist **")
             return
         else:
@@ -53,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing ** ")
             return
 
-        elif list_arg[0] != 'BaseModel':
+        elif not list_arg[0] in list_class:
             print("** class doesn't exist **")
             return
 
@@ -82,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
             print("**class name missing**")
             return
 
-        elif list_arg[0] != 'BaseModel':
+        elif not list_arg[0] in list_class:
             print("** class doesn't exist **")
             return
 
@@ -115,8 +124,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in dict_all_obj.items():
                 list_str.append(str(value))
                 print(list_str)
-                return
-        if not list_arg[0] in list_class:
+        elif not list_arg[0] in list_class:
             print("class doesn't exist")
             return
         else:
@@ -135,7 +143,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("**class name missing**")
             return
-        elif list_arg[0] != 'BaseModel':
+        elif not list_arg[0] in list_class:
             print("** class doesn't exist **")
             return
         elif len(list_arg) < 2:
